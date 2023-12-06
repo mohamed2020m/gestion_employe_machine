@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Login Page</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #eee
+        }
+
+        .login-container {
+            width: 300px; /* Adjust the width as needed */
+        }
+    </style>
+</h:head>
+<h:body>
+     <div class="login-container">
+        <p:messages id="errorMessages" showDetail="true" autoUpdate="true" closable="true" />
+        
+        <h:form rendered="#{not adminBean.loggedIn}" style="background: white;  margin: auto; text-align: center; padding: 20px; border-radius: 5px;">
+            <h1 style="margin-bottom: 20px;">Sign In Admin</h1>
+
+            <p:inputText id="username" value="#{adminBean.userName}" placeholder="Username" style=" margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;" />
+
+            <p:password id="password" value="#{adminBean.password}" placeholder="Password" style=" margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;" />
+
+            <p:commandButton value="Login" action="#{adminBean.login}" style="width: 100%; padding: 10px; border: none; background: orange; color: white;border-radius: 5px;" />
+        </h:form>
+
+        <h:form rendered="#{adminBean.loggedIn}" style="max-width: 400px; margin: auto; text-align: center; border: 1px solid #ddd; padding: 20px; border-radius: 5px;">
+            <h:outputText value="Welcome, #{adminBean.userName}!" style="display: block; margin-bottom: 20px;" />
+
+            <p:commandButton value="Logout" action="#{adminBean.logout}" style=" background-color: #d9534f; color: #fff; border-radius: 5px;" />
+        </h:form>
+
+    </div>
+</h:body>
+</html>

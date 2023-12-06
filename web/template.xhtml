@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <f:view locale="#{language.localeCode}">
+        
+    
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-xrhcHiOp1kZ7fmgtPD9x9JMQP0DHU9XDCysdP2oC1FANaVLSCBXp8+kb2Xe8tua6z68FJ9Yoi2dx4s1x8TKtg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+              
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        
+        <style>
+            .custom-input {
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+                font-size: 14px;
+                margin: 5px; /* Adjust margin as needed */
+            }
+            
+             .button-container-top {
+                text-align: center; /* Center the buttons */
+                margin-bottom: 5px; /* Add margin at the bottom */
+            }
+
+            .button-container-column {
+                display:flex;
+                text-align: center; /* Center the buttons within the column */
+            }
+
+            .ui-button {
+                margin: 0 5px; /* Adjust the left and right margin as needed */
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        
+        <h:panelGroup rendered="#{adminBean.loggedIn}">
+            <p:growl id="growl" life="3000" />
+        
+            <p:layoutUnit style="padding: 8px 10px; display: flex; position: relative;" styleClass="ui-button-primary" position="north" size="100" resizable="true" closable="true" collapsible="true">
+                <h:form id="language" style="margin-right: 10px;">
+                    <h:selectOneMenu style="padding: 8px 10px; margin: 0;" value="#{language.localeCode}" onchange="submit()" valueChangeListener="#{language.countryLocaleCodeChanged}">
+                        <f:selectItems value="#{language.countriesInMap}" />
+                    </h:selectOneMenu>
+                </h:form>
+
+                <h:form style="position: absolute; right: 0;top:0">
+                    <p:commandButton value="${bundle.logout}" action="#{adminBean.logout}" styleClass="ui-button-secondary" />
+                </h:form>
+            </p:layoutUnit>
+
+
+
+
+            <p:layout fullPage="true">
+                <p:layoutUnit position="west" size="175" header="#{bundle.AppName}" collapsible="true">
+                    <h:form id="menuForm">
+                        <p:menu>
+                            <p:menuitem value="#{bundle.Home}" outcome="/faces/web/machine/index.xhtml" icon="ui-icon-home"/>
+                            <p:submenu label="#{bundle.Maintenance}">
+                                <p:menuitem value="Employe" outcome="/faces/web/employe/List.xhtml" />
+                                <p:menuitem value="Machine" outcome="/faces/web/machine/List.xhtml" />
+                                <p:menuitem value="#{bundle.MachinesByEmployee}" outcome="/faces/web/machine/MachinesByEmployee.xhtml" />
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="60" style="text-align: center; line-height: 60px;" >
+                    <h3 style="font-size: 20px; margin: 0;">@Leeuw 2023</h3>
+                </p:layoutUnit>
+
+
+                <p:layoutUnit position="center">
+                    <ui:insert name="body"/>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:panelGroup>
+        
+        <h:panelGroup rendered="#{not adminBean.loggedIn}" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; padding: 20px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px;">
+            <!-- Content for unauthorized access -->
+            <h1 style="color: #721c24; font-size: 24px;">#{bundle.access_denied}</h1>
+            <p style="color: #721c24; font-size: 16px;">#{bundle.not_sufficient_permission}</p>
+        
+             <h:form>
+                <p:commandButton value="${bundle.back_to_login}" action="/index.xhtml?faces-redirect=true" style="margin-top: 10px;"/>
+            </h:form>
+            
+            <h:form id="language_1" style="margin: 10px;">
+                <h:selectOneMenu style="padding: 8px 10px; margin: 0;" value="#{language.localeCode}" onchange="submit()" valueChangeListener="#{language.countryLocaleCodeChanged}">
+                    <f:selectItems value="#{language.countriesInMap}" />
+                </h:selectOneMenu>
+            </h:form>
+        </h:panelGroup>
+
+    </h:body>
+    </f:view>
+</html>
